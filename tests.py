@@ -27,7 +27,7 @@ class TestBooksCollector:
     def test_set_book_genre_name_not_in_list_not_added(self):
         collector = BooksCollector()
         collector.set_book_genre('Harry Potter and python', 'Ужасы')
-        assert collector.books_genre == {}
+        assert collector.get_books_genre() == {}
 
     def test_get_book_genre_correct_data_return(self):
         collector = BooksCollector()
@@ -69,9 +69,8 @@ class TestBooksCollector:
         collector = BooksCollector()
         collector.add_new_book('Harry Potter and python')
         collector.add_new_book('Harry Potter2 and python')
-        collector.set_book_genre('Harry Potter and python', 'Ужасы')
-        collector.set_book_genre('Harry Potter2 and python', 'Мультфильмы')
         collector.add_book_in_favorites('Harry Potter and python')
         collector.add_book_in_favorites('Harry Potter2 and python')
         collector.delete_book_from_favorites('Harry Potter and python')
         assert collector.get_list_of_favorites_books() == ['Harry Potter2 and python']
+
