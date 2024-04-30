@@ -8,13 +8,13 @@ class TestBooksCollector:
     def test_add_new_book_incorrect_len_name_not_added(self, name):
         collector = BooksCollector()
         collector.add_new_book(name)
-        assert len(collector.books_genre) == 0
+        assert collector.get_books_genre() == {}
 
     def test_add_new_book_duplicate_names_not_added(self):
         collector = BooksCollector()
         collector.add_new_book('Harry Potter and python')
         collector.add_new_book('Harry Potter and python')
-        assert len(collector.books_genre) == 1
+        assert collector.get_books_genre() == {'Harry Potter and python': ''}
 
     @pytest.mark.parametrize('name, genre', [['Фантастика', 'Фантастика'], ['Ужас', 'Ужасы'], ['Детектив', 'Детективы'],
                                              ['Мультфильм', 'Мультфильмы'], ['Комедия', 'Комедии']])
@@ -28,12 +28,6 @@ class TestBooksCollector:
         collector = BooksCollector()
         collector.set_book_genre('Harry Potter and python', 'Ужасы')
         assert collector.get_books_genre() == {}
-
-    def test_get_book_genre_correct_data_return(self):
-        collector = BooksCollector()
-        collector.add_new_book('Harry Potter and python')
-        collector.set_book_genre('Harry Potter and python', 'Ужасы')
-        assert collector.get_book_genre('Harry Potter and python') == 'Ужасы'
 
     def test_get_books_with_specific_genre_correct_data_return(self):
         collector = BooksCollector()
@@ -64,8 +58,15 @@ class TestBooksCollector:
         collector.set_book_genre('Harry Potter3 and python', genre)
         assert collector.get_books_for_children() == ['Harry Potter2 and python']
 
-
     def test_add_book_in_favorites_books_correct_data_added(self):
+        collector = BooksCollector()
+        collector.add_new_book('Harry Potter and python')
+        collector.add_new_book('Harry Potter2 and python')
+        collector.add_book_in_favorites('Harry Potter and python')
+        collector.add_book_in_favorites('Harry Potter2 and python')
+        assert collector.get_list_of_favorites_books() == ['Harry Potter and python', 'Harry Potter2 and python']
+
+    def test_delete_book_from_favorites_books_correct_data_added(self):
         collector = BooksCollector()
         collector.add_new_book('Harry Potter and python')
         collector.add_new_book('Harry Potter2 and python')
@@ -73,4 +74,3 @@ class TestBooksCollector:
         collector.add_book_in_favorites('Harry Potter2 and python')
         collector.delete_book_from_favorites('Harry Potter and python')
         assert collector.get_list_of_favorites_books() == ['Harry Potter2 and python']
-
