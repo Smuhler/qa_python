@@ -66,7 +66,7 @@ class TestBooksCollector:
         collector.add_book_in_favorites('Harry Potter2 and python')
         assert collector.get_list_of_favorites_books() == ['Harry Potter and python', 'Harry Potter2 and python']
 
-    def test_delete_book_from_favorites_books_correct_data_added(self):
+    def test_delete_book_from_favorites_books_correct_data_removed(self):
         collector = BooksCollector()
         collector.add_new_book('Harry Potter and python')
         collector.add_new_book('Harry Potter2 and python')
